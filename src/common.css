@@ -1,0 +1,60 @@
+body {
+  padding: 50px;
+}
+
+h2 {
+  margin: 0;
+}
+
+.cat-info {
+  margin-top: 50px;
+  display: flex;
+  gap: 30px;
+}
+
+.temp-style {
+  font-weight: 600;
+}
+
+.error {
+  font-weight: 600;
+  color: red;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.loader {
+  margin: 50px;
+  width: 48px;
+  height: 48px;
+  border: 5px solid;
+  border-color: #ff3d00 transparent;
+  border-radius: 50%;
+  display: block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
