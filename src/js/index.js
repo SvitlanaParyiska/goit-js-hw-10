@@ -1,4 +1,11 @@
+import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
+
+Notiflix.Notify.init({
+  width: '400px',
+  timeout: 4000,
+  closeButton: false,
+});
 
 const selectEl = document.querySelector('.breed-select');
 const loaderEl = document.querySelector('.loader');
@@ -8,6 +15,7 @@ const boxCatInfoEl = document.querySelector('.cat-info');
 selectEl.addEventListener('change', setOutput);
 
 loaderEl.classList.remove('visually-hidden');
+
 fetchBreeds()
   .then(data => {
     selectEl.innerHTML = createSelectList(data);
@@ -15,7 +23,10 @@ fetchBreeds()
   })
   .catch(err => {
     loaderEl.classList.add('visually-hidden');
-    errorEl.classList.remove('is-hidden');
+    //errorEl.classList.remove('is-hidden');
+    Notiflix.Notify.failure(
+      `Oops! Something went wrong! Try reloading the page!`
+    );
   });
 
 function createSelectList(arr) {
@@ -30,10 +41,18 @@ function setOutput() {
   return fetchCatByBreed(selectEl.value)
     .then(data => {
       boxCatInfoEl.innerHTML = createCatInfo(data);
+      if (!boxCatInfoEl.innerHTML) {
+        Notiflix.Notify.failure(
+          `Oops! Something went wrong! Try a different breed!`
+        );
+      }
       loaderEl.classList.add('visually-hidden');
     })
     .catch(err => {
-      errorEl.classList.remove('is-hidden');
+      Notiflix.Notify.failure(
+        `Oops! Something went wrong! Try reloading the page!`
+      );
+      //errorEl.classList.remove('is-hidden');
       loaderEl.classList.add('visually-hidden');
     });
 }
@@ -41,7 +60,7 @@ function setOutput() {
 function createCatInfo(arr) {
   return arr
     .map(
-      ({ breeds, url }) => `<img src=${url} alt=${breeds[0].name} width=600>
+      ({ breeds, url }) => `<img src=${url} alt=${breeds[0].name} width=500>
 <div class="text-box"><h2>${breeds[0].name}</h2>
 <p>${breeds[0].description}</p>
 <p><span class="temp-style">Temperament: </span>${breeds[0].temperament}</p>
